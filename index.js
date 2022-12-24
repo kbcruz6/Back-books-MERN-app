@@ -1,5 +1,5 @@
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2";
 import cors from "cors";
 
 const app = express();
@@ -7,12 +7,11 @@ app.use(express.json());
 app.use(cors());
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "password",
-  database: process.env.DB_NAME || "booksapp",
-
-  port: process.env.DB_PORT || 3306,
+  host: process.env.MYSQLHOST /*|| "localhost"*/,
+  user: process.env.MYSQLUSER /*|| "root"*/,
+  password: process.env.MYSQLPASSWORD /*|| "password"*/,
+  database: process.env.MYSQLDATABASE /*|| "booksapp"*/,
+  port: process.env.MYSQLPORT /*|| 3306,*/,
 });
 
 app.get("/", (req, res) => {

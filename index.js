@@ -1,25 +1,18 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
-import {
-  PORT,
-  DB_HOST,
-  DB_USER,
-  DB_PASSWORD,
-  DB_NAME,
-  DB_PORT,
-} from "./src/config.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 const db = mysql.createConnection({
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-  port: DB_PORT,
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "password",
+  database: process.env.DB_NAME || "booksapp",
+
+  port: process.env.DB_PORT || 3306,
 });
 
 app.get("/", (req, res) => {
@@ -96,6 +89,8 @@ app.put("/books/:id", (req, res) => {
     }
   });
 });
+
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(`Server listen in PORT: ${PORT}...`);

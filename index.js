@@ -2,10 +2,12 @@ import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 
+//! INIT APP
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+//! DB CONNECTION
 const db = mysql.createConnection({
   host: process.env.MYSQLHOST /*|| "localhost"*/,
   user: process.env.MYSQLUSER /*|| "root"*/,
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("Hello this is the backend");
 });
 
+//! GET ALL BOOKS
 app.get("/books", (req, res) => {
   const q = "SELECT * FROM books";
   db.query(q, (err, data) => {
@@ -29,6 +32,7 @@ app.get("/books", (req, res) => {
   });
 });
 
+//! POST A BOOK
 app.post("/books", (req, res) => {
   const q =
     "INSERT INTO books (title,author,description,price) VALUES (?,?,?,?)";
@@ -49,6 +53,7 @@ app.post("/books", (req, res) => {
   });
 });
 
+//! DELETE A BOOK
 //! Se le agrega :id, porque es necesario especificar cual borrar de todos
 app.delete("/books/:id", (req, res) => {
   const bookId = req.params.id;
@@ -63,6 +68,7 @@ app.delete("/books/:id", (req, res) => {
   });
 });
 
+//! UPDATE A BOOK
 app.put("/books/:id", (req, res) => {
   const bookId = req.params.id;
 
@@ -89,6 +95,7 @@ app.put("/books/:id", (req, res) => {
   });
 });
 
+//! CONNECTION
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {

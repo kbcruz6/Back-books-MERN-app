@@ -1,6 +1,6 @@
-import express from "express";
-import mysql from "mysql2";
-import cors from "cors";
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
 
 //! INIT APP
 const app = express();
@@ -96,7 +96,7 @@ app.put("/books/:id", (req, res) => {
 });
 
 //! CONNECTION
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`Server listen in PORT: ${PORT}...`);

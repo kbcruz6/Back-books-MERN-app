@@ -1,11 +1,13 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //! INIT APP
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 //! DB CONNECTION
 const db = mysql.createConnection({
@@ -14,6 +16,11 @@ const db = mysql.createConnection({
   password: process.env.MYSQLPASSWORD /*|| "password"*/,
   database: process.env.MYSQLDATABASE /*|| "booksapp"*/,
   port: process.env.MYSQLPORT /*|| 3306,*/,
+});
+
+app.use((req, res, next) => {
+  console.log(req.method, req.path);
+  next();
 });
 
 app.get("/", (req, res) => {
@@ -101,3 +108,5 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server listen in PORT: ${PORT}...`);
 });
+
+module.exports = app;
